@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Convert Area</title>
+    <style>
+        /* CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #00aa00; /* Green title color (#00aa00) */
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .input-section {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .output-section {
+            padding: 15px;
+            background-color: #f7f7f7;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .output-section h3 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .output-section p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Convert Area</h1>
+        <div class="input-section">
+            <label for="fromUnit">Convert from:</label>
+            <select id="fromUnit">
+                <option value="guntha">Guntha</option>
+                <option value="squareMeter">Square meter</option>
+                <option value="hectare">Hectare</option>
+                <option value="squareInch">Square inch</option>
+                <option value="squareFeet">Square feet</option>
+                <option value="acre">Acre</option>
+            </select>
+
+            <label for="value">Enter value:</label>
+            <input type="number" id="value" step="0.0000001">
+
+            <label for="toUnit">Convert to:</label>
+            <select id="toUnit">
+                <option value="guntha">Guntha</option>
+                <option value="squareMeter">Square meter</option>
+                <option value="hectare">Hectare</option>
+                <option value="squareInch">Square inch</option>
+                <option value="squareFeet">Square feet</option>
+                <option value="acre">Acre</option>
+            </select>
+
+            <button onclick="convertArea()">Convert</button>
+        </div>
+        <div class="output-section" id="output">
+        </div>
+    </div>
+    <script>
+        // JavaScript code here
+        function convertArea() {
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
+            const value = parseFloat(document.getElementById("value").value);
+
+            if (isNaN(value)) {
+                alert("Please enter a valid number.");
+                return;
+            }
+
+            const conversions = {
+                guntha: {
+                    guntha: value => value.toFixed(7) + " Guntha",
+                    squareMeter: value => (value * 101.171410).toFixed(7) + " Square meter",
+                    hectare: value => (value * 0.010117).toFixed(7) + " Hectare",
+                    squareInch: value => (value * 156815.99913).toFixed(7) + " Square inch",
+                    squareFeet: value => (value * 1089).toFixed(7) + " Square feet",
+                    acre: value => (value * 0.025).toFixed(7) + " Acre",
+                },
+                squareMeter: {
+                    guntha: value => (value * 0.009884).toFixed(7) + " Guntha",
+                    squareMeter: value => value.toFixed(7) + " Square meter",
+                    hectare: value => (value * 0.0001).toFixed(7) + " Hectare",
+                    squareInch: value => (value * 1550.00310001).toFixed(7) + " Square inch",
+                    squareFeet: value => (value * 10.763910417).toFixed(7) + " Square feet",
+                    acre: value => (value * 0.000247105).toFixed(7) + " Acre",
+                },
+                hectare: {
+                    guntha: value => (value * 98.842123).toFixed(7) + " Guntha",
+                    squareMeter: value => (value * 10000).toFixed(7) + " Square meter",
+                    hectare: value => value.toFixed(7) + " Hectare",
+                    squareInch: value => (value * 15500031.0001).toFixed(7) + " Square inch",
+                    squareFeet: value => (value * 107639.150512).toFixed(7) + " Square feet",
+                    acre: value => (value * 2.47105).toFixed(7) + " Acre",
+                },
+                squareInch: {
+                    guntha: value => (value * 6.4516e-8 * 0.009884).toFixed(7) + " Guntha",
+                    squareMeter: value => (value * 0.00064516).toFixed(7) + " Square meter",
+                    hectare: value => (value * 6.4516e-8).toFixed(7) + " Hectare",
+                    squareInch: value => value.toFixed(7) + " Square inch",
+                    squareFeet: value => (value * 0.00694444444).toFixed(7) + " Square feet",
+                    acre: value => (value * 6.4516e-8 * 0.000247105).toFixed(7) + " Acre",
+                },
+                squareFeet: {
+                    guntha: value => (value * 0.000917).toFixed(7) + " Guntha",
+                    squareMeter: value => (value * 0.09290304).toFixed(7) + " Square meter",
+                    hectare: value => (value * 9.290304e-6).toFixed(7) + " Hectare",
+                    squareInch: value => (value * 144).toFixed(7) + " Square inch",
+                    squareFeet: value => value.toFixed(7) + " Square feet",
+                    acre: value => (value * 2.295684e-5).toFixed(7) + " Acre",
+                },
+                acre: {
+                    guntha: value => (value * 40).toFixed(7) + " Guntha",
+                    squareMeter: value => (value * 4046.85642).toFixed(7) + " Square meter",
+                    hectare: value => (value * 0.404686).toFixed(7) + " Hectare",
+                    squareInch: value => (value * 6272640).toFixed(7) + " Square inch",
+                    squareFeet: value => (value * 43560).toFixed(7) + " Square feet",
+                    acre: value => value.toFixed(7) + " Acre",
+                },
+            };
+
+            const result = conversions[fromUnit][toUnit](value);
+
+            const output = document.getElementById("output");
+            output.innerHTML = `<h3>Conversion Result:</h3><p>${result}</p>`;
+        }
+    </script>
+</body>
+</html>
